@@ -31,17 +31,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd bitbucket-repo/cms
+          cd bitbucket-repo
           npm install  # Adjust if using a different package manager
 
       - name: Build project
         run: |
-          cd bitbucket-repo/cms
+          cd bitbucket-repo
           npm run build  # Adjust according to your build script
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
-          publish_dir: bitbucket-repo/cms/build  # Directory containing the build output
+          publish_dir: bitbucket-repo/build  # Directory containing the build output
           publish_branch: gh-pages  # Branch where GitHub Pages is deployed

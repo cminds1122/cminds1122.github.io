@@ -57,7 +57,7 @@ const handleForgetpassword=()=>{
       <div className="login__container">
         <div className="login__wrapper">
           <form onSubmit={handleData}>
-            <h2 className="text-center">Login</h2>
+            <h2 className="text-center">Login 1</h2>
             <div className="mt-4">
               <div className="input-group flex-nowrap p-2 ">
                 <span className={`input-group-text ${loginDto.emailError ? '  login__invalid' : ''}  `} id="addon-wrapping">

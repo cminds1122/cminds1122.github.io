@@ -3,7 +3,7 @@ name: Deploy Develop Branch from Bitbucket
 on:
   push:
     branches:
-      - main  # Trigger this workflow on pushes to the main branch of the GitHub repository
+      - main  # Trigger this workflow on pushes to the main branch of the GitHub repository.
 
 jobs:
   deploy:

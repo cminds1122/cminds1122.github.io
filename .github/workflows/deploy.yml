@@ -1,38 +1,43 @@
-name: Deploy React App to GitHub Pages
+name: Deploy Develop Branch from Bitbucket
 
 on:
   push:
     branches:
-      - main  # Specify the branch that triggers the deployment
+      - main  # Trigger this workflow on pushes to the main branch of the GitHub repository
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # The environment where the job runs
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout GitHub repository
         uses: actions/checkout@v3
-        # This action checks out your repository so that the workflow can access it
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.12.0'
-        # This action sets up Node.js so you can run npm commands
-        # Specify the version of Node.js you want to use
+      - name: Set up Git
+        run: |
+          git config --global credential.helper store
+          echo "https://${{ secrets.BITBUCKET_USERNAME }}:${{ secrets.BITBUCKET_APP_PASSWORD }}@bitbucket.org" > ~/.git-credentials
+
+      - name: Clone Bitbucket repository and checkout develop branch
+        run: |
+          git clone https://cminds1122@bitbucket.org/studentmanagementtool/cms.git bitbucket-repo
+          cd bitbucket-repo
+          git fetch
+          git checkout development
 
       - name: Install dependencies
-        run: npm install
-        # This step installs the dependencies defined in your package.json file
+        run: |
+          cd bitbucket-repo
+          npm install  # Adjust if using a different package manager
 
       - name: Build project
-        run: npm run build
-        # This step runs the build script, which creates the production build of your app
+        run: |
+          cd bitbucket-repo
+          npm run build  # Adjust according to your build script
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
-          publish_dir: ./build
-        # This action deploys the contents of the build directory to GitHub Pages
-        # The GITHUB_TOKEN is automatically provided by GitHub Actions for authentication
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build  # Directory containing the build output
+          publish_branch: gh-pages  # Branch where GitHub Pages is deployed

@@ -27,12 +27,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd bitbucket-repo
+          cd bitbucket-repo/cms
           npm install  # Adjust if using a different package manager
 
       - name: Build project
         run: |
-          cd bitbucket-repo
+          cd bitbucket-repo/cms
           npm run build  # Adjust according to your build script
 
       - name: Deploy to GitHub Pages
